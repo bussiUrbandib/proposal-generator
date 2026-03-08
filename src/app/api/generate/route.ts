@@ -34,7 +34,7 @@ async function scrapeUrl(url: string): Promise<string> {
     .replace(/<[^>]+>/g, " ")
     .replace(/\s+/g, " ")
     .trim()
-    .slice(0, 8000); // 토큰 제한을 위해 텍스트 잘라내기
+    .slice(0, 2000); // 무료 크레딧 토큰 제한 대응
 
   return text;
 }
@@ -70,7 +70,7 @@ export async function POST(req: NextRequest) {
         "X-Title": "ProposalAI",
       },
       body: JSON.stringify({
-        model: "anthropic/claude-opus-4",
+        model: "anthropic/claude-sonnet-4",
         messages: [
           { role: "system", content: systemPrompt },
           {
@@ -78,7 +78,7 @@ export async function POST(req: NextRequest) {
             content: `다음 웹페이지 내용을 분석하여 제안서를 작성해주세요.\n\nURL: ${url}\n\n웹페이지 내용:\n${pageContent}`,
           },
         ],
-        max_tokens: 4000,
+        max_tokens: 500,
       }),
     });
 
